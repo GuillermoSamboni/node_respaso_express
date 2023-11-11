@@ -1,5 +1,5 @@
 const productModel = require("../models/ProductModel");
-const ResponseStructure = require("../helpers/ResponseStructure");
+const { ResponseStructure } = require("../helpers/ResponseStructure");
 
 const controller = {};
 
@@ -15,12 +15,11 @@ controller.saveProduct = async (req, res) => {
 
     await newProduct.save();
 
-    const response = new ResponseStructure(
-      200,
-      "Producto guardado exitosamemte",
-      body
-    );
-    res.status(200).send(response);
+    ResponseStructure.status = 200;
+    ResponseStructure.message = "Producto guardado exitosamemte";
+    ResponseStructure.data = body;
+
+    res.status(200).send(ResponseStructure);
   } catch (error) {
     const errorsCatch = error.errors;
     const errors = {};
@@ -28,12 +27,12 @@ controller.saveProduct = async (req, res) => {
     for (let i in errorsCatch) {
       errors[i] = errorsCatch[i].message;
     }
-    const response = new ResponseStructure(
-      500,
-      "Error al guardar el producto",
-      errors
-    );
-    res.status(500).json(response);
+
+    ResponseStructure.status = 500;
+    ResponseStructure.message = "Error al guardar el producto";
+    ResponseStructure.data = errors;
+    
+    res.status(500).json(ResponseStructure);
   }
 };
 
