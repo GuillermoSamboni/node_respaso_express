@@ -2,20 +2,17 @@ const { Schema, model } = require("mongoose");
 
 const productSchema = new Schema({
   nameProduct: {
+    type: String,
     required: [true, "Nombre producto es requerido"],
-    type: String
   },
-
-
   price: {
     type: Number,
     required: [true, "El precio es requerido"],
-    defaultValue: 0,
     min: [1000, "El precio debe ser superior a mil pesos"],
     max: [1000000, "El precio debe ser inferior a 1 millon"],
   },
   category: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "Categories",
     required: [true, "La categoria es requerida"],
   },
@@ -27,4 +24,4 @@ const productSchema = new Schema({
   },
 });
 
-module.exports = model('product', productSchema, 'productos');
+module.exports = model("product", productSchema, "productos");

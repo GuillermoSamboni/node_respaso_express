@@ -4,4 +4,6 @@ const getAllProducts = async () => {
   return await productModel.find();
 };
 
+
+
 module.exports = { getAllProducts };
