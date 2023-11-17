@@ -1,11 +1,20 @@
 const productModel = require("../models/ProductModel");
 const { ResponseStructure } = require("../helpers/ResponseStructure");
+const CategoryModel = require("../models/CategoryModel");
 
 const controller = {};
 
 controller.getAllProducts = async (req, res) => {
-  const listProduct = await productModel.find();
-  res.json(listProduct);
+  try {
+    const listProduct = await productModel.find().populate({
+      path: 'category', 
+      model: CategoryModel, 
+    }); 
+
+    res.json(listProduct);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 controller.saveProduct = async (req, res) => {
